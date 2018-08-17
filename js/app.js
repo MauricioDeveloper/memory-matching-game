@@ -128,11 +128,11 @@ function removeClasses() {
 }
 
 // Disable clicks
-function disableClick() {
- openCard.forEach(function (card) {
-   card.off("click");
-  })
-}
+// function disableClick() {
+//  openCard.forEach(function (card) {
+//    card.off("click");
+//   })
+// }
 
 // Start timer on the first card click
 function startTimer() {
