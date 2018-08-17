@@ -35,35 +35,45 @@ function createCard() {
 
 // Logic to find matching cards
 function findMatch() {
-  // Show cards on click
+
   $(".card").on("click", function() {
-    if ($(this).hasClass("open show")) { return; }
-    $(this).toggleClass("flipInY open show");
-    openCard.push($(this));
-    startGame = true;
-   // Check if classlist matches when openCard length == 2
-    if (openCard.length === 2) {
-      if (openCard[0][0].classList[2] === openCard[1][0].classList[2]) {
-      openCard[0][0].classList.add("bounceIn", "match");
-      openCard[1][0].classList.add("bounceIn", "match");
-      $(openCard[0]).off('click');
-      $(openCard[1]).off('click');
-      matchFound += 1;
-      moves++;
-      removeOpenCards();
-      findWinner();
-      } else {
-      // If classes don't match, add "wrong" class
-      openCard[0][0].classList.add("shake", "wrong");
-      openCard[1][0].classList.add("shake", "wrong");
-      // Set timeout to remove "show" and "open" class
-      setTimeout(removeClasses, 1100);
-      // Reset openCard.length to 0
-      setTimeout(removeOpenCards, 1100);
-      moves++;
+    //game begin with first click on any card
+     startGame = true;
+
+    // verify if a card isn´t open and add them to the openCard array
+    //based in the game rules(2 cards open each turn)
+    if (!$(this).hasClass('open')) { 
+      if(openCard.length === 0){
+        $(this).addClass("flipInY open show");
+        openCard.push($(this));
+
+      }else if(openCard.length === 1){
+        $(this).addClass("flipInY open show");
+        openCard.push($(this));
+
+    // Check if classlist matches when openCard length == 2
+        if (openCard[0][0].classList[2] === openCard[1][0].classList[2]) {
+        openCard[0][0].classList.add("bounceIn", "match");
+        openCard[1][0].classList.add("bounceIn", "match");
+        $(openCard[0]).off('click');
+        $(openCard[1]).off('click');
+        matchFound += 1;
+        moves++;
+        removeOpenCards();
+        findWinner();
+        } else {
+        // If classes don't match, add "wrong" class
+        openCard[0][0].classList.add("shake", "wrong");
+        openCard[1][0].classList.add("shake", "wrong");
+        // Set timeout to remove "show" and "open" class
+        setTimeout(removeClasses, 1100);
+        // Reset openCard.length to 0
+        setTimeout(removeOpenCards, 1100);
+        moves++;
+        }
+          updateMoves();
       }
     }
-  updateMoves();
   })
 }
 
